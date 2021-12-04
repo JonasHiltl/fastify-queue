@@ -1,6 +1,6 @@
 # Fastify Queue
 
-Easily integrate BullMQ with Fastify. Create queues and workers through your folder structure.
+Easily integrate [BullMQ](https://github.com/taskforcesh/bullmq) with Fastify. Create queues and workers through your folder structure.
 
 _Still work in progress_
 
@@ -11,13 +11,11 @@ npm i fastify-queue
 npm i bullmq
 ```
 
-This package is an abstraction on top of [BullMQ](https://github.com/taskforcesh/bullmq)
-
 ### Use
 
 Register the plugin
 
-```
+```typescript
 import fp from 'fastify-plugin';
 import queue, { FastifyQueueOptions } from 'fastify-queue';
 
