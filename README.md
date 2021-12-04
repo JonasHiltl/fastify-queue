@@ -1,5 +1,7 @@
 # Fastify Queue
 
+Easily integrate BullMQ with Fastify. Create queues and workers through your folder structure.
+
 _Still work in progress_
 
 ### Installation:
