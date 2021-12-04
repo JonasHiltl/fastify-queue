@@ -33,20 +33,23 @@ const fastifyBullMQ = async (
     (queues as any)[queueName] = new Queue(queueName, {
       connection,
     });
+    fastify.log.info(`Created a queue called ${queueName}`);
 
     // Show an error if a file for a worker is created but no function is exported as default
     // This also causes BullMQ to throw a TypeError, because the worker.default function is an empty object
     if (
       Object.keys(worker.default).length === 0 &&
       worker.default.constructor === Object
-    )
-      fastify.log.error(
+    ) {
+      fastify.log.warn(
         `The worker ${queueName} does not export a default function`
       );
-
-    (workers as any)[queueName] = new Worker(queueName, worker.default, {
-      connection,
-    });
+    } else {
+      (workers as any)[queueName] = new Worker(queueName, worker.default, {
+        connection,
+      });
+      fastify.log.info(`Created a worker for the queue ${queueName}`);
+    }
   });
 
   fastify.decorate('queues', queues);
