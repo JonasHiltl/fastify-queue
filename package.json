@@ -1,0 +1,48 @@
+{
+  "name": "fastify-queue",
+  "version": "0.3.0",
+  "description": "",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "fastify",
+    "bull",
+    "bullmq",
+    "jobs",
+    "queues",
+    "redis"
+  ],
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "homepage": "https://github.com/JonasHiltl/fastify-queue",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JonasHiltl/fastify-queue"
+  },
+  "author": "JonasHiltl",
+  "license": "MIT",
+  "peerDependencies": {
+    "bullmq": ">=1.55.1",
+    "fastify": ">=3.24.1"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^4.28.2",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "fast-glob": "^3.2.7",
+    "fastify-plugin": "^3.0.0",
+    "ioredis": "^4.28.2"
+  }
+}
