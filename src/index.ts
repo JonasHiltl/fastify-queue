@@ -1,9 +1,9 @@
-import { FastifyInstance } from "fastify";
-import fp from "fastify-plugin";
-import { Queue, Worker } from "bullmq";
-import IORedis, { RedisOptions } from "ioredis";
-import * as fg from "fast-glob";
-import * as path from "path";
+import { FastifyInstance } from 'fastify';
+import fp from 'fastify-plugin';
+import { Queue, Worker } from 'bullmq';
+import IORedis, { RedisOptions } from 'ioredis';
+import * as fg from 'fast-glob';
+import * as path from 'path';
 
 export interface FastifyQueueOptions extends RedisOptions {
   bullPath: string;
@@ -25,7 +25,7 @@ const fastifyBullMQ = async (
   const files = fg.sync(opts.bullPath);
 
   files.forEach(async (filePath) => {
-    const parts = filePath.split("/");
+    const parts = filePath.split('/');
     const queueName = parts[parts.length - 2];
 
     const worker = await import(path.resolve(filePath));
@@ -34,15 +34,25 @@ const fastifyBullMQ = async (
       connection,
     });
 
+    // Show an error if a file for a worker is created but no function is exported as default
+    // This also causes BullMQ to throw a TypeError, because the worker.default function is an empty object
+    if (
+      Object.keys(worker.default).length === 0 &&
+      worker.default.constructor === Object
+    )
+      fastify.log.error(
+        `The worker ${queueName} does not export a default function`
+      );
+
     (workers as any)[queueName] = new Worker(queueName, worker.default, {
       connection,
     });
   });
 
-  fastify.decorate("queues", queues);
-  fastify.decorate("workers", workers);
+  fastify.decorate('queues', queues);
+  fastify.decorate('workers', workers);
 };
 
 export default fp<FastifyQueueOptions>(fastifyBullMQ, {
-  name: "fastify-queue",
+  name: 'fastify-queue',
 });
