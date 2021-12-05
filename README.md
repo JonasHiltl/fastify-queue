@@ -11,7 +11,7 @@ npm i fastify-queue
 npm i bullmq
 ```
 
-### Use
+## How to use
 
 Register the plugin
 
