@@ -26,6 +26,7 @@ const fastifyBullMQ = async (
 
   files.forEach(async (filePath) => {
     const parts = filePath.split('/');
+    // the queue name is defined by the name of the directory in which the files are
     const queueName = parts[parts.length - 2];
 
     const worker = await import(path.resolve(filePath));
