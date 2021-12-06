@@ -18,12 +18,17 @@ npm i bullmq
 ```typescript
 import fp from 'fastify-plugin';
 import queue, { FastifyQueueOptions } from 'fastify-queue';
+import * as IORedis from 'ioredis';
 
 export default fp<FastifyQueueOptions>(async (fastify, opts) => {
-  fastify.register(queue, {
-    bullPath: '*/bull/**/*.js',
+  const connection = new IORedis({
     maxRetriesPerRequest: null,
     enableReadyCheck: false,
+  });
+
+  fastify.register(queue, {
+    bullPath: '*/bull/**/*.js',
+    connection: connection,
   });
 });
 ```
