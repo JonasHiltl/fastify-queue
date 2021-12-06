@@ -43,6 +43,6 @@ src
         auth.worker.ts
 ```
 
-The name of the file inside the subdiretories is irrelevant. The queuename is based on the subdirectories name.
+The name of the file inside the subdiretories is irrelevant. The name of the Queue is based on the subdirectories name.
 
 If the file inside the subdiretories do not export a default function, it will just create a `Queue` with the name of the subdiretory. If a defualt function export exists it will be used as the `Worker`.
