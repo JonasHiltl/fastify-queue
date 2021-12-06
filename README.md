@@ -28,8 +28,17 @@ export default fp<FastifyQueueOptions>(async (fastify, opts) => {
 });
 ```
 
-The glob path `*/bull/**/*.js` will load files from `src/bull/[queue-name]/handler.js` or when using typescript it can also load from `dist/bull/[queue-name]/handler.js`
+The `bullPath` is a glob path and it specifies in which directory your worker functions and queues can be found.
+For example with the folder structure below, we would create a `Queue` with the name of `user` and `auth`.
 
-You can create a folder inside the `bull` directory (or any other name specified through the `bullPath`) and it's name will be used as the name of the BullMQ `Queue`.
+```
+src
+  - bull
+    - user
+        profile.worker.ts
+    - auth
+        auth.worker.ts
+```
 
-If the file inside the folder exports a default function that will be used as the BullMQ `Worker`. The worker function accepts the `Job` and a fastify instance.
+The name of the file inside the subdiretories is irrelevant. The queuename is based on the subdirectories name.
+If the file inside the subdiretories do not export a default function, it will just create a `Queue` with the name of the subdiretory. If a defualt function export exists it will be used as the `Worker`.
