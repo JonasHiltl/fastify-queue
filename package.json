@@ -43,7 +43,6 @@
   },
   "dependencies": {
     "fast-glob": "^3.2.7",
-    "fastify-plugin": "^3.0.0",
-    "ioredis": "^4.28.2"
+    "fastify-plugin": "^3.0.0"
   }
 }

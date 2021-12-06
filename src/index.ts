@@ -1,13 +1,13 @@
 import { FastifyInstance } from 'fastify';
 import fp from 'fastify-plugin';
-import { Queue, Worker } from 'bullmq';
-import IORedis, { RedisOptions } from 'ioredis';
+import { Queue, Worker, ConnectionOptions } from 'bullmq';
 import * as fg from 'fast-glob';
 import * as path from 'path';
 
-export interface FastifyQueueOptions extends RedisOptions {
+export declare type FastifyQueueOptions = {
   bullPath: string;
-}
+  connection: ConnectionOptions;
+};
 
 /**
  * Load every worker function inside a specified directory
@@ -18,7 +18,6 @@ const fastifyBullMQ = async (
   fastify: FastifyInstance,
   opts: FastifyQueueOptions
 ) => {
-  const connection = new IORedis(opts);
   const queues = {};
   const workers = {};
 
@@ -32,7 +31,7 @@ const fastifyBullMQ = async (
     const worker = await import(path.resolve(filePath));
 
     (queues as any)[queueName] = new Queue(queueName, {
-      connection,
+      connection: opts.connection,
     });
     fastify.log.info(`Created a queue called ${queueName}`);
 
@@ -45,7 +44,7 @@ const fastifyBullMQ = async (
       );
     } else {
       (workers as any)[queueName] = new Worker(queueName, worker.default, {
-        connection,
+        connection: opts.connection,
       });
       fastify.log.info(`Created a worker for the queue ${queueName}`);
     }
