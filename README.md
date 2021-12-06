@@ -1,6 +1,6 @@
 # Fastify Queue
 
-Easily integrate [BullMQ](https://github.com/taskforcesh/bullmq) with Fastify. Create queues and workers through your folder structure.
+Plugin to easily intergrate BullMQ into fastify through file based Queue/Worker creation.
 
 _Still work in progress_
 
