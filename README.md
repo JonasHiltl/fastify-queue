@@ -28,7 +28,8 @@ export default fp<FastifyQueueOptions>(async (fastify, opts) => {
 });
 ```
 
-2. Specify `bullPath`
+2. Specify `bullPath`:
+
    The `bullPath` is a glob path and it specifies in which directory your worker functions and queues can be found.
 
 For example with the folder structure below, we would create a `Queue` with the name of `user` and `auth`.
