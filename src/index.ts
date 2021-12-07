@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import fp from 'fastify-plugin';
 import { Queue, Worker, ConnectionOptions } from 'bullmq';
 import * as fg from 'fast-glob';
-import * as path from 'path';
+import path from 'path';
 
 export declare type FastifyQueueOptions = {
   bullPath: string;
