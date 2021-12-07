@@ -2,18 +2,14 @@
 
 Plugin to easily intergrate BullMQ into fastify through file based Queue/Worker creation.
 
-_Still work in progress_
-
-### Installation:
+### Install
 
 ```
 npm i fastify-queue
 npm i bullmq
 ```
 
-## How to use
-
-1. Register the plugin
+## Usage
 
 ```typescript
 import fp from 'fastify-plugin';
@@ -33,9 +29,9 @@ export default fp<FastifyQueueOptions>(async (fastify, opts) => {
 });
 ```
 
-2. Specify `bullPath`:
+#### Specify `bullPath`
 
-   The `bullPath` is a glob path and it specifies in which directory your worker functions and queues can be found.
+The `bullPath` is a glob path and it specifies in which directory your worker functions and queues can be found.
 
 For example with the folder structure below, we would create a `Queue` with the name of `user` and `auth`.
 
