@@ -2,7 +2,7 @@
 
 Plugin to easily intergrate BullMQ into fastify through file based Queue/Worker creation.
 
-### Install
+## Install
 
 ```
 npm i fastify-queue
