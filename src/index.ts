@@ -43,9 +43,13 @@ const fastifyBullMQ = async (
         `The queue ${queueName} does not have a worker function`
       );
     } else {
-      (workers as any)[queueName] = new Worker(queueName, worker.default, {
-        connection: opts.connection,
-      });
+      (workers as any)[queueName] = new Worker(
+        queueName,
+        (job) => worker.default(job, fastify),
+        {
+          connection: opts.connection,
+        }
+      );
       fastify.log.info(`Created a worker for the queue ${queueName}`);
     }
   });
