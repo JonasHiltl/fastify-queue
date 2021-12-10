@@ -45,7 +45,7 @@ const fastifyBullMQ = async (
     } else {
       (workers as any)[queueName] = new Worker(
         queueName,
-        (job) => worker.default(job, fastify),
+        (job) => worker.default(fastify, job),
         {
           connection: opts.connection,
         }
