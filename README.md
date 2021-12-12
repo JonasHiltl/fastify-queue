@@ -86,7 +86,7 @@ export default authWorker;
 
 ### Queue & Worker Options
 
-You can export two addittional variables besides your Worker Function named `queueConfig` and `workerConfig`. They are of type [QueueOptions](https://github.com/taskforcesh/bullmq/blob/dd7efc3390e4a9a90f1b3ee0c3e3c74deb1f0369/docs/gitbook/api/bullmq.queueoptions.md) and [WorkerOptions](https://github.com/taskforcesh/bullmq/blob/dd7efc3390e4a9a90f1b3ee0c3e3c74deb1f0369/docs/gitbook/api/bullmq.workeroptions.md) and if exist can be used to configure addtional options supported by `BullMQ`.
+You can export two addittional variables besides your Worker Function named `queueConfig` and `workerConfig`. They are of type [QueueOptions](https://github.com/taskforcesh/bullmq/blob/dd7efc3390e4a9a90f1b3ee0c3e3c74deb1f0369/docs/gitbook/api/bullmq.queueoptions.md) and [WorkerOptions](https://github.com/taskforcesh/bullmq/blob/dd7efc3390e4a9a90f1b3ee0c3e3c74deb1f0369/docs/gitbook/api/bullmq.workeroptions.md) and if exist, can be used to configure addtional options supported by `BullMQ`.
 
 ```typescript
 export const queueConfig: QueueOptions = {
