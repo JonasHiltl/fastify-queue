@@ -48,7 +48,7 @@ The name of the file inside the subdiretories is irrelevant. The name of the Que
 
 If the file inside the subdiretories do not export a default function, it will just create a `Queue` with the name of the subdiretory. If a defualt function export exists it will be used as the `Worker`.
 
-## Worker function
+## Worker Function
 
 This is an example for a Worker function that accepts a fastify instance and a `BullMQ` job. Needs to be the default export.
 
@@ -82,6 +82,23 @@ const authWorker = async (
 };
 
 export default authWorker;
+```
+
+### Queue & Worker Options
+
+You can export two addittional variables besides your Worker Function named `queueConfig` and `workerConfig`. They are of type [QueueOptions](https://github.com/taskforcesh/bullmq/blob/dd7efc3390e4a9a90f1b3ee0c3e3c74deb1f0369/docs/gitbook/api/bullmq.queueoptions.md) and [WorkerOptions](https://github.com/taskforcesh/bullmq/blob/dd7efc3390e4a9a90f1b3ee0c3e3c74deb1f0369/docs/gitbook/api/bullmq.workeroptions.md) and if exist can be used to configure addtional options supported by `BullMQ`.
+
+```typescript
+export const queueConfig: QueueOptions = {
+  defaultJobOptions: {
+    removeOnComplete: true,
+  },
+};
+
+export const workerConfig: WorkerOptions = {
+  autorun: true,
+  // connection would override default connection defined in plugin options
+};
 ```
 
 ## Typescript
