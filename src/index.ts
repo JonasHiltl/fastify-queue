@@ -41,11 +41,7 @@ const fastifyBullMQ = async (
       });
       fastify.log.info(`Created the queue ${queueName}`);
 
-      if (
-        worker &&
-        Object.keys(worker).length === 0 &&
-        worker.constructor === Object
-      ) {
+      if (!worker) {
         fastify.log.warn(
           `The queue ${queueName} does not have a worker function`
         );
