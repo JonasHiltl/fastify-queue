@@ -1,6 +1,6 @@
 {
   "name": "fastify-queue",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
