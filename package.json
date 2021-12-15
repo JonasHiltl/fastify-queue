@@ -33,7 +33,7 @@
   "author": "JonasHiltl",
   "license": "MIT",
   "peerDependencies": {
-    "bullmq": ">=1.55.1",
+    "bullmq": ">=1.57.4",
     "fastify": ">=3.24.1"
   },
   "devDependencies": {
