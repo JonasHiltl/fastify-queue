@@ -57,7 +57,7 @@ const fastifyBullMQ = async (
         fastify.log.info(`Created a worker for the queue ${queueName}`);
       }
     } catch (error) {
-      console.log('Cateched error', error);
+      console.log('Catched error', error);
     }
   });
 
