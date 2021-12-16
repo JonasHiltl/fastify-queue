@@ -24,40 +24,36 @@ const fastifyBullMQ = async (
   const files = fg.sync(opts.bullPath);
 
   files.forEach(async (filePath) => {
-    try {
-      const parts = filePath.split('/');
-      // the queue name is defined by the name of the directory in which the files are
-      const queueName = parts[parts.length - 2];
+    const parts = filePath.split('/');
+    // the queue name is defined by the name of the directory in which the files are
+    const queueName = parts[parts.length - 2];
 
-      const {
-        default: worker,
-        queueConfig,
-        workerConfig,
-      } = await import(path.resolve(filePath));
+    const {
+      default: worker,
+      queueConfig,
+      workerConfig,
+    } = await import(path.resolve(filePath));
 
-      (queues as any)[queueName] = new Queue(queueName, {
-        connection: opts.connection,
-        ...(queueConfig && queueConfig),
-      });
-      fastify.log.info(`Created the queue ${queueName}`);
+    (queues as any)[queueName] = new Queue(queueName, {
+      connection: opts.connection,
+      ...(queueConfig && queueConfig),
+    });
+    fastify.log.info(`Created the queue ${queueName}`);
 
-      if (!worker) {
-        fastify.log.warn(
-          `The queue ${queueName} does not have a worker function`
-        );
-      } else {
-        (workers as any)[queueName] = new Worker(
-          queueName,
-          (job) => worker(fastify, job),
-          {
-            connection: opts.connection,
-            ...(workerConfig && workerConfig),
-          }
-        );
-        fastify.log.info(`Created a worker for the queue ${queueName}`);
-      }
-    } catch (error) {
-      console.log('Catched error', error);
+    if (!worker) {
+      fastify.log.warn(
+        `The queue ${queueName} does not have a worker function`
+      );
+    } else {
+      (workers as any)[queueName] = new Worker(
+        queueName,
+        (job) => worker(fastify, job),
+        {
+          connection: opts.connection,
+          ...(workerConfig && workerConfig),
+        }
+      );
+      fastify.log.info(`Created a worker for the queue ${queueName}`);
     }
   });
 
