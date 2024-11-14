@@ -29,6 +29,12 @@ export default fp<FastifyQueueOptions>(async (fastify, opts) => {
 });
 ```
 
+###
+
+npm login --scope=@izhur --auth-type=legacy --registry=https://npm.pkg.github.com
+npm publish
+
+
 #### Specify `bullPath`
 
 The `bullPath` is a glob path and it specifies in which directory your worker functions and queues can be found.
