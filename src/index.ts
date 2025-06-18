@@ -20,7 +20,7 @@ const fastifyBullMQ = async (
 ) => {
   const queues = {};
   const workers = {};
-  // Detectar versão do BullMQ verificando se Worker suporta certas propriedades
+  // Detect BullMQ version by checking if Queue supports certain properties
   const isBullMQ5 = Queue.prototype.hasOwnProperty('isPaused');
   
   fastify.log.info(`Using BullMQ version ${isBullMQ5 ? '5.x' : '1.x'} compatibility mode`);
@@ -49,35 +49,23 @@ const fastifyBullMQ = async (
         `The queue ${queueName} does not have a worker function`
       );
     } else {
-      if (isBullMQ5) {
-        // BullMQ 5.x compatible worker
-        (workers as any)[queueName] = new Worker(
-          queueName,
-          async (job: Job) => {
-            try {
-              return await worker(fastify, job);
-            } catch (error: unknown) {
-              const errorMessage = error instanceof Error ? error.message : String(error);
-              fastify.log.error(`Error processing job ${job.id} in queue ${queueName}: ${errorMessage}`);
-              throw error;
-            }
-          },
-          {
-            connection: opts.connection,
-            ...(workerConfig && workerConfig),
+      // Worker implementation compatible with both BullMQ 1.x and 5.x
+      (workers as any)[queueName] = new Worker(
+        queueName,
+        async (job: Job) => {
+          try {
+            return await worker(fastify, job);
+          } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            fastify.log.error(`Error processing job ${job.id} in queue ${queueName}: ${errorMessage}`);
+            throw error;
           }
-        );
-      } else {
-        // BullMQ 1.x compatible worker
-        (workers as any)[queueName] = new Worker(
-          queueName,
-          (job) => worker(fastify, job),
-          {
-            connection: opts.connection,
-            ...(workerConfig && workerConfig),
-          }
-        );
-      }
+        },
+        {
+          connection: opts.connection,
+          ...(workerConfig && workerConfig),
+        }
+      );
       fastify.log.info(`Created a worker for the queue ${queueName}`);
     }
   }
